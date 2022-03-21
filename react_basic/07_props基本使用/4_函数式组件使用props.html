@@ -35,6 +35,19 @@
             )
         }
 
+        // 对标签属性进行类型, 必要性的限制
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number.isRequired
+        }
+
+        // 指定默认标签属性值
+        Person.defaultProps = {
+            sex: '不男不女',
+            age: 18
+        }
+
         // 渲染组件到页面
         ReactDOM.render(<Person name='tom' sex='男' age={19} />, document.getElementById('test'))
     </script>
