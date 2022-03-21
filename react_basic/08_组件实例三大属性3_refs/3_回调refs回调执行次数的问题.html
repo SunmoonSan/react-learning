@@ -24,6 +24,10 @@
         // 1. 创建虚拟DOM
         class Demo extends React.Component {
 
+            state = {
+                isHot: true
+            }
+
             // 展示左侧输入的数据
             showInfo = () => {
                 console.log(this)
@@ -31,11 +35,27 @@
                 alert(input1.value)
             }
 
+            changeWeather = () => {
+                const { isHot } = this.state
+                this.setState({
+                    isHot: !isHot
+                })
+            }
+
+            saveInput = (c) => {
+                this.input1 = c;
+                console.log('@', c)
+            }
+
             render() {
+                const { isHot } = this.state
                 return (
                     <div>
-                        <input ref={c => { this.input1 = c; console.log('@', c) }} type='text' placeholder="点我提示数据" />
+                        <h2>今天天气很{isHot ? '炎热' : '凉爽'}</h2>
+                        {/*<input ref={c => { this.input1 = c; console.log('@', c) }} type='text' placeholder="点我提示数据" />*/}
+                        <input ref={this.saveInput} type='text' placeholder="点我提示数据" />
                         <button onClick={this.showInfo}>点我提示左侧的数据</button>
+                        <button onClick={this.changeWeather}>点我切换天气</button>
                     </div>
                 )
             }
