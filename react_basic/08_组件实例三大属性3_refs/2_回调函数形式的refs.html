@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2_回调函数形式的refs</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+
+    </div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom, 用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel, 用于将jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+        // 1. 创建虚拟DOM
+        class Demo extends React.Component {
+
+            // 展示左侧输入的数据
+            showData = () => {
+                console.log(this)
+                const { input1 } = this
+                alert(input1.value)
+            }
+
+            showData2 = () => {
+                console.log(this)
+                const { input2 } = this
+                alert(input2.value)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input ref={c => { this.input1 = c }} type='text' placeholder="点我提示数据" />
+                        <button onClick={this.showData}>点我提示左侧的数据</button>
+                        <input ref={c => { this.input2 = c }} onBlur={this.showData2} type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        // 2. 渲染虚拟DOM到页面
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
