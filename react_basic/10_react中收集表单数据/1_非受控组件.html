@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>1_非受控组件</title>
+</head>
+
+<body>
+<!-- 准备好一个容器 -->
+<div id="test">
+
+</div>
+
+<!-- 引入react核心库 -->
+<script src="../js/react.development.js"></script>
+<!-- 引入react-dom, 用于支持react操作DOM -->
+<script src="../js/react-dom.development.js"></script>
+<!-- 引入babel, 用于将jsx转化为js -->
+<script src="../js/babel.min.js"></script>
+
+<!-- 此处一定要写babel -->
+<script type="text/babel">
+    class Login extends React.Component {
+
+        handleSubmit = (event) => {
+            event.preventDefault() // 阻止表单提交
+            const {username, password} = this
+            console.log(this)
+            console.log(username)
+            console.log(password)
+            alert(`username: ${username.value}, password: ${password.value}`)
+        }
+
+        render() {
+            return (
+                <form action="http://www.atguigu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input ref={c => this.username = c} type="text" name='username'/>
+                    密 码：<input ref={c => this.password = c} type="password" name='password'/>
+                    <button>登录</button>
+                </form>
+            )
+        }
+
+    }
+
+    ReactDOM.render(<Login/>, document.getElementById('test'))
+</script>
+</body>
+
+</html>
