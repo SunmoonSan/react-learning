@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2_不用函数柯里化实现</title>
+</head>
+
+<body>
+<!-- 准备好一个容器 -->
+<div id="test">
+
+</div>
+
+<!-- 引入react核心库 -->
+<script src="../js/react.development.js"></script>
+<!-- 引入react-dom, 用于支持react操作DOM -->
+<script src="../js/react-dom.development.js"></script>
+<!-- 引入babel, 用于将jsx转化为js -->
+<script src="../js/babel.min.js"></script>
+
+<!-- 此处一定要写babel -->
+<script type="text/babel">
+    /**
+     * 高阶函数：如果一个函数符合下面2个规范中的任何一个，即为高阶函数
+     *  1. 若A函数接收的参数是一个函数
+     *  2. 若A函数的返回值是一个函数
+     *
+     *  函数柯里化： 通过函数调用继续返回函数的方式， 实现多次接收参数， 最后统一处理的函数编码方式
+     */
+    class Login extends React.Component {
+
+        state = {
+            username: '',
+            password: ''
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault() // 阻止表单提交
+            alert(`username: ${username.value}, password: ${password.value}`)
+        }
+
+        // 保存表单数据到状态中
+        saveFormData = (dataType, event) => {
+            this.setState({
+                [dataType]: event.target.value
+            })
+        }
+
+        render() {
+            return (
+                <form action="http://www.atguigu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input onChange={event => this.saveFormData("username", event)} type="text" name='username'/>
+                    密 码：<input onChange={event => this.saveFormData("password", event)} type="password" name='password'/>
+                    <button>登录</button>
+                </form>
+            )
+        }
+
+    }
+
+    ReactDOM.render(<Login/>, document.getElementById('test'))
+</script>
+</body>
+
+</html>
