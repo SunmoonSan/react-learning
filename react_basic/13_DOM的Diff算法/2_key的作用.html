@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2_key的作用</title>
+</head>
+
+<body>
+<!-- 准备好一个容器 -->
+<div id="test">
+
+</div>
+
+<!-- 引入react核心库 -->
+<script src="../js/17.0.1/react.development.js"></script>
+<!-- 引入react-dom, 用于支持react操作DOM -->
+<script src="../js/17.0.1/react-dom.development.js"></script>
+<!-- 引入babel, 用于将jsx转化为js -->
+<script src="../js/17.0.1/babel.min.js"></script>
+
+<!-- 此处一定要写babel -->
+<script type="text/babel">
+    // 创建组件
+    class Person extends React.Component {
+
+        state = {
+            persons: [
+                {id: 1, name: '小张', age: 18},
+                {id: 2, name: '小李', age: 28},
+            ]
+        }
+
+        componentDidMount() {
+            setInterval(() => {
+                this.setState({
+                    date: new Date()
+                })
+            }, 1000)
+        }
+
+        add = () => {
+            const {persons} = this.state
+            const p = {id: persons.length + 1, name: '小王', age: 20}
+            this.setState({
+                persons: [p, ...persons]
+            })
+        }
+
+        render() {
+            return (
+                <div>
+                    <h2>展示人员信息</h2>
+                    <h2>使用index作为key</h2>
+                    <button onClick={this.add}>添加一个小王</button>
+                    <ul>
+                        {
+                            this.state.persons.map((personObj, index) => {
+                                return <li key={index}>{personObj.name}---{personObj.age} <input type="text"/></li>
+                            })
+                        }
+                    </ul>
+                    <hr/>
+                    <hr/>
+                    <h2>展示人员信息</h2>
+                    <h2>使用数据ID作为key</h2>
+                    <ul>
+                        {
+                            this.state.persons.map((personObj) => {
+                                return <li key={personObj.id}>{personObj.name}---{personObj.age} <input type="text"/></li>
+                            })
+                        }
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Person/>, document.getElementById('test'))
+    /**
+     * 一. 虚拟DOM中key的作用：
+     *      1. 简单的说：key是虚拟DOM对象的标识， 在更新显示key起着及其重要的作用
+     *      2. 详细的说： 当状态中的数据发生变化时， react会根据【新数据】生成【新的虚拟DOM】
+     *          随后React进行【新虚拟DOM】与【旧虚拟DOM】的diff比较， 比较规则如下：
+     *          a. 旧虚拟DOM中找到了与新虚拟DOM相同的key
+     *              1). 若虚拟DOM中内容没变， 直接使用之前的真实DOM
+     *              2). 过虚拟DOM中内容变了， 则生成新的真实DOM，随后替换页面中之前的真实DOM
+     *          b. 旧虚拟DOM中未找到与新虚拟DOM相同的key
+     *              1). 根据数据创建新的真实DOM， 随后渲染到页面
+     * 二.用index作为key可能会引发的问题
+     *      1. 若对数据进行逆序添加，逆序删除等破坏顺序操作， 会产生没有必要的真实DOM更新==>界面效果没问题， 效率极低
+     *      2. 如果结构中还包含输入类的DOM， 会产生错误DOM更新，界面有问题
+     *      3. 注意！如果不存在对数据的逆序添加，逆序删除等破坏顺序操作， 仅用于渲染列表用于提示， 使用index做key是没有问题的
+     *
+     */
+</script>
+</body>
+
+</html>

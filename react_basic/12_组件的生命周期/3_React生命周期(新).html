@@ -66,6 +66,11 @@
             return props
         }
 
+        getSnapshotBeforeUpdate() {
+            console.log('getSnapshotBeforeUpdate')
+            return 'atguigu'
+        }
+
         // 组件将要挂载
         componentDidMount() {
             console.log('Count componentDidMount')
@@ -78,8 +83,8 @@
         }
 
         // 组件更新完毕
-        componentDidUpdate() {
-            console.log('Count componentDidUpdate')
+        componentDidUpdate(preProps, preState) {
+            console.log('Count componentDidUpdate', preProps, preState)
         }
 
     }
@@ -89,15 +94,16 @@
     /**
      *  1. 初始化阶段：ReactDOM.render()触发， --初次渲染
      *      a. constructor()
-     *      b. componentWillMount()
+     *      b. getDerivedStateFromProps()
      *      c。 render()
      *      d。 componentDidMount() ***** 常用
      *          一般做一下初始化的事情， 如：开启定时器， 发送网络请求， 订阅消息
      *  2. 更新阶段：由组件内部this.setState()或父组件render触发
-     *      a. shouldComponentUpdate()
-     *      b. componentWillUpdate()
+     *      a. getDerivedStateFromProps()
+     *      b. shouldComponentUpdate()
      *      c. render()
-     *      d。 componentDidUpdate()
+     *      d. getSnapshotBeforeUpdate
+     *      e. componentDidUpdate()
      *  3. 卸载组件：由ReactDOM.unmountComponentAtNode()触发
      *      a. componentWillUnmount() ******
      *          一般做一些收尾的事情， 如：关闭定时器， 取消订阅消息

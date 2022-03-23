@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>4_getSnapshotBeforeUpdate的使用场景</title>
+    <style>
+        .list {
+            width: 200px;
+            height: 150px;
+            background-color: skyblue;
+            overflow: auto;
+        }
+
+        .news {
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 准备好一个容器 -->
+<div id="test">
+
+</div>
+
+<!-- 引入react核心库 -->
+<script src="../js/17.0.1/react.development.js"></script>
+<!-- 引入react-dom, 用于支持react操作DOM -->
+<script src="../js/17.0.1/react-dom.development.js"></script>
+<!-- 引入babel, 用于将jsx转化为js -->
+<script src="../js/17.0.1/babel.min.js"></script>
+
+<!-- 此处一定要写babel -->
+<script type="text/babel">
+    // 创建组件
+    class NewsList extends React.Component {
+
+        state = {
+            newsArr: []
+        }
+
+        componentDidMount() {
+            setInterval(() => {
+                const {newsArr} = this.state
+                const news = `新闻 ${newsArr.length + 1}`
+                this.setState({
+                    newsArr: [news, ...newsArr]
+                })
+            }, 1000)
+        }
+
+        render() {
+            const {newsArr} = this.state
+            console.log('Count render')
+            const {count} = this.state
+            return (
+                <div className='list' ref='list'>
+                    {
+                        newsArr.map((n, index) => {
+                            return <div className='news' key={index}>新闻{n}</div>
+                        })
+                    }
+                </div>
+            )
+        }
+
+        getSnapshotBeforeUpdate() {
+            console.log('getSnapshotBeforeUpdate')
+            return this.refs.list.scrollHeight
+        }
+
+        componentDidUpdate(preProps, preState, height) {
+            this.refs.list.scrollTop += this.refs.list.scrollHeight - height;
+        }
+    }
+
+    ReactDOM.render(<NewsList count={100}/>, document.getElementById('test'))
+</script>
+</body>
+
+</html>
