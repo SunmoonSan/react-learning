@@ -2,5 +2,4 @@
 /shelf/
 /workspace.xml
 # Editor-based HTTP Client requests
-/httpRequests/
-/react_staging/
+react_staging/node_modules/*
