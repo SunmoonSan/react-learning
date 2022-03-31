@@ -7,5 +7,4 @@ export default class Home extends Component {
             <h3>我是Home的内容</h3>
         );
     }
-}
-;
+};
