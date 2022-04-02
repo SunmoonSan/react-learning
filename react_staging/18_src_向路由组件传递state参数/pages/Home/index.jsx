@@ -14,11 +14,11 @@ export default class Home extends Component {
                     <ul className="nav nav-tabs">
                         <li>
                             {/*<a className="list-group-item" href="./home-news.html">News</a>*/}
-                            <MyNavLink replace to="/home/news">News</MyNavLink>
+                            <MyNavLink to="/home/news">News</MyNavLink>
                         </li>
                         <li>
                             {/*<a className="list-group-item active" href="./home-message.html">Message</a>*/}
-                            <MyNavLink replace to="/home/message">Message</MyNavLink>
+                            <MyNavLink to="/home/message">Message</MyNavLink>
                         </li>
                     </ul>
                     {/*  注册路由  */}
